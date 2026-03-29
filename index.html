@@ -447,6 +447,13 @@
     </blockquote>
     <h4>Screen recording:</h4>
     <div class="img-wrap"><img src="assets/slack_demo.gif" alt="Slack Demo"></div>
+
+    <h4>Auto-Fix Merge Requests &mdash; Echo writes the code too:</h4>
+    <p>When Echo identifies a fixable error, it doesn't just report it &mdash; it creates a <strong>GitLab merge request</strong> with regression tests, pushes the fix, and verifies the pipeline passes. All prefixed with <code>[AI]</code> so you know who wrote it.</p>
+    <div class="img-wrap"><img src="assets/gitlab_autofix_mrs.png" alt="GitLab Auto-Fix Merge Requests — 5 AI-generated draft MRs with passing pipelines"></div>
+    <blockquote>
+      <p><strong>What you're seeing:</strong> Five draft MRs created by Echo across <code>order_fulfillment</code> and <code>auth</code> services. Each MR includes the fix + regression test, with pipelines passing (green checks). All created autonomously from Sentry error analysis &mdash; test-first, fix second.</p>
+    </blockquote>
   </div>
 
   <!-- Feature 2: Asana -->
