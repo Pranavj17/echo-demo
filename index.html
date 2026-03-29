@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echo - AI Ops Agent | Scripbox</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: #09090b; color: #e4e4e7; line-height: 1.7; }
+  a { color: #818cf8; text-decoration: none; }
+  a:hover { color: #a5b4fc; }
+  img { max-width: 100%; border-radius: 12px; }
+  code { font-family: 'JetBrains Mono', monospace; background: #18181b; padding: 2px 8px; border-radius: 6px; font-size: 0.85em; color: #a5b4fc; }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 80px 20px 60px;
+    background: radial-gradient(ellipse at top, #1e1b4b 0%, #09090b 70%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99,102,241,0.05) 0%, transparent 60%);
+    animation: pulse 8s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 1; } }
+  .hero-content { position: relative; z-index: 1; }
+  .emoji-big { font-size: 5em; display: block; margin-bottom: 16px; animation: wave 2s ease-in-out infinite; }
+  @keyframes wave { 0%,100% { transform: rotate(0deg); } 25% { transform: rotate(14deg); } 75% { transform: rotate(-8deg); } }
+  .hero h1 { font-size: 4em; font-weight: 900; letter-spacing: -2px; background: linear-gradient(135deg, #e4e4e7 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .tagline { font-size: 1.4em; color: #71717a; font-weight: 400; margin: 8px 0 6px; }
+  .hero .sub { color: #52525b; margin-bottom: 28px; font-size: 1em; }
+  .badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+  .badges img { border-radius: 4px; }
+  .video-thumb { max-width: 680px; margin: 0 auto; position: relative; cursor: pointer; transition: transform 0.3s; }
+  .video-thumb:hover { transform: scale(1.02); }
+  .video-thumb img { border: 2px solid #27272a; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .video-thumb:hover img { border-color: #6366f1; }
+  .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 72px; height: 72px; background: rgba(99,102,241,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(99,102,241,0.4); }
+  .play-btn::after { content:''; border-left: 24px solid white; border-top: 14px solid transparent; border-bottom: 14px solid transparent; margin-left: 4px; }
+  .hero-caption { color: #52525b; font-size: 0.9em; margin-top: 16px; }
+
+  /* Container */
+  .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 60px 0; }
+
+  /* Section headers */
+  .section-label { text-transform: uppercase; letter-spacing: 3px; font-size: 0.8em; font-weight: 600; color: #6366f1; margin-bottom: 8px; }
+  h2 { font-size: 2.2em; font-weight: 800; letter-spacing: -1px; color: #fafafa; margin-bottom: 16px; }
+  h3 { font-size: 1.6em; font-weight: 700; color: #fafafa; margin-bottom: 12px; }
+  h4 { font-size: 1.1em; font-weight: 600; color: #d4d4d8; margin: 24px 0 8px; }
+  p { color: #a1a1aa; margin-bottom: 14px; }
+  strong { color: #e4e4e7; }
+  ul, ol { margin: 0 0 16px 20px; color: #a1a1aa; }
+  li { margin-bottom: 6px; }
+
+  /* Divider */
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, #27272a, transparent); margin: 0; }
+
+  /* Problem stats */
+  .stat-row { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 32px 0; }
+  .stat { text-align: center; padding: 20px 32px; background: #18181b; border: 1px solid #27272a; border-radius: 16px; min-width: 160px; }
+  .stat .num { font-size: 2.4em; font-weight: 900; color: #ef4444; display: block; }
+  .stat .label { font-size: 0.85em; color: #71717a; }
+  .stat.good .num { color: #22c55e; }
+
+  /* Agent cards */
+  .agent-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+  .agent-card { background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 24px; text-align: center; transition: border-color 0.3s, transform 0.3s; }
+  .agent-card:hover { border-color: #6366f1; transform: translateY(-4px); }
+  .agent-card .agent-emoji { font-size: 2.5em; display: block; margin-bottom: 8px; }
+  .agent-card h4 { color: #fafafa; margin: 0 0 4px; font-size: 1.1em; }
+  .agent-card .role { color: #6366f1; font-size: 0.85em; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .agent-card p { font-size: 0.9em; color: #71717a; margin: 0; }
+
+  /* Feature sections */
+  .feature { background: #0f0f12; border: 1px solid #1c1c22; border-radius: 20px; padding: 40px; margin: 24px 0; }
+  .feature-num { display: inline-block; background: #6366f1; color: white; width: 32px; height: 32px; border-radius: 50%; text-align: center; line-height: 32px; font-weight: 700; font-size: 0.9em; margin-right: 8px; }
+
+  /* Image styling */
+  .img-wrap { text-align: center; margin: 24px 0; }
+  .img-wrap img { border: 1px solid #27272a; box-shadow: 0 8px 32px rgba(0,0,0,0.3); transition: transform 0.3s; }
+  .img-wrap img:hover { transform: scale(1.01); }
+  .img-wrap.small img { max-width: 480px; }
+  .caption { text-align: center; color: #52525b; font-size: 0.85em; margin-top: 8px; font-style: italic; }
+
+  /* Blockquote */
+  blockquote { border-left: 3px solid #6366f1; padding: 16px 20px; margin: 20px 0; background: #18181b; border-radius: 0 12px 12px 0; }
+  blockquote p { margin-bottom: 6px; color: #a1a1aa; }
+  blockquote p:last-child { margin: 0; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; border-radius: 12px; overflow: hidden; }
+  th { background: #18181b; padding: 14px 16px; text-align: left; font-weight: 600; color: #e4e4e7; font-size: 0.9em; border-bottom: 1px solid #27272a; }
+  td { padding: 12px 16px; border-bottom: 1px solid #1c1c22; color: #a1a1aa; font-size: 0.9em; }
+  tr:hover td { background: #18181b; }
+
+  /* Pre */
+  pre { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 20px; overflow-x: auto; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: #a1a1aa; }
+
+  /* Tags */
+  .tag { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 500; margin: 2px; }
+  .tag-green { background: #052e16; color: #4ade80; border: 1px solid #166534; }
+  .tag-blue { background: #172554; color: #60a5fa; border: 1px solid #1e40af; }
+  .tag-purple { background: #2e1065; color: #c084fc; border: 1px solid #6b21a8; }
+
+  /* Two-column grid */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .col-card { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 20px; }
+  .col-card h4 { margin-top: 0; color: #fafafa; }
+
+  /* Results highlight */
+  .result-highlight { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+  .result-card { background: linear-gradient(135deg, #052e16, #18181b); border: 1px solid #166534; border-radius: 16px; padding: 20px; text-align: center; }
+  .result-card .big { font-size: 2em; font-weight: 900; color: #22c55e; display: block; }
+  .result-card .desc { font-size: 0.85em; color: #71717a; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 80px 20px; background: radial-gradient(ellipse at bottom, #1e1b4b 0%, #09090b 70%); }
+  .footer .emoji-big { animation: wave 3s ease-in-out infinite; }
+  .footer h2 { font-size: 2em; }
+  .footer p { color: #52525b; }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 2.8em; }
+    .agent-cards { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .result-highlight { grid-template-columns: 1fr; }
+    .stat-row { flex-direction: column; align-items: center; }
+    .feature { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <span class="emoji-big">&#x1FAE1;</span>
+    <h1>Echo</h1>
+    <p class="tagline">Your AI Ops Team That Never Sleeps</p>
+    <p class="sub">Scripbox's multi-agent AI operations platform &mdash; built on Claude, powered by OpenClaw</p>
+    <div class="badges">
+      <a href="https://drive.google.com/file/d/1luekhTV4Y0NmPsa-QF6ve6MZ00Fa9OrL/view?usp=drive_link"><img src="https://img.shields.io/badge/Watch_Demo-Google_Drive-red?style=for-the-badge&logo=googledrive" alt="Demo"></a>
+      <a href="https://anthropic.com"><img src="https://img.shields.io/badge/Built_with-Claude_Sonnet_4-blueviolet?style=for-the-badge" alt="Claude"></a>
+      <a href="https://www.apple.com/mac-mini/"><img src="https://img.shields.io/badge/Self_Hosted-Mac_Mini_M4-black?style=for-the-badge&logo=apple" alt="Mac Mini"></a>
+    </div>
+    <a href="https://drive.google.com/file/d/1luekhTV4Y0NmPsa-QF6ve6MZ00Fa9OrL/view?usp=drive_link" class="video-thumb">
+      <img src="assets/promo_thumb.png" alt="Watch the 2-minute demo video">
+      <div class="play-btn"></div>
+    </a>
+    <p class="hero-caption">&#9654; Watch the 2-minute demo</p>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- THE PROBLEM -->
+<section>
+  <p class="section-label">The Problem</p>
+  <h2>200+ errors a day. One tired engineer.</h2>
+  <p>Scripbox engineering deals with production errors across 7 microservices. Every. Single. Day. Each error needs manual triage &mdash; Sentry for traces, Graylog for logs, GitLab for code, Asana for context. That's 15-30 minutes per error, and they pile up fast.</p>
+  <div class="stat-row">
+    <div class="stat"><span class="num">200+</span><span class="label">daily errors</span></div>
+    <div class="stat"><span class="num">7</span><span class="label">microservices</span></div>
+    <div class="stat"><span class="num">15-30m</span><span class="label">per triage</span></div>
+    <div class="stat"><span class="num">0</span><span class="label">fun had</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- THE SOLUTION -->
+<section>
+  <p class="section-label">The Solution</p>
+  <h2>Three agents. One brain. Zero babysitting.</h2>
+  <p>Echo is a multi-agent AI system that handles production operations <strong>autonomously</strong>. It runs 24/7 on a Mac Mini under someone's desk. No cloud. No fuss. Just works.</p>
+  <div class="img-wrap"><img src="assets/agents.png" alt="Three Echo Agents"></div>
+  <div class="agent-cards">
+    <div class="agent-card">
+      <span class="agent-emoji">&#x1FAE1;</span>
+      <h4>Echo Main</h4>
+      <div class="role">Conversations</div>
+      <p>Answers @Echo mentions in Asana and Slack. Thinks first, then gives you the real answer.</p>
+    </div>
+    <div class="agent-card">
+      <span class="agent-emoji">&#x1F527;</span>
+      <h4>Echo-Ops</h4>
+      <div class="role">Bug Hunter</div>
+      <p>Monitors 7 Sentry channels every 15 min. Analyzes errors across Sentry + Graylog + GitLab. Never sleeps.</p>
+    </div>
+    <div class="agent-card">
+      <span class="agent-emoji">&#x1F4F1;</span>
+      <h4>Echo-WA</h4>
+      <div class="role">Newsletter Bot</div>
+      <p>Sends weekly WhatsApp newsletters with live Nifty, Sensex, and MF NAV data. Monday mornings, handled.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section>
+  <p class="section-label">Features</p>
+  <h2>What Echo actually does</h2>
+
+  <!-- Feature 1: Sentry -->
+  <div class="feature">
+    <h3><span class="feature-num">1</span> Interactive Sentry Triage</h3>
+    <p>When a production error hits, Echo doesn't just notify you &mdash; it <strong>investigates</strong>. It pulls the Sentry stack trace, searches Graylog for correlated logs, checks GitLab for who changed what, and drops the analysis right in your Slack thread. Then it asks: <em>what do you want to do?</em></p>
+    <div class="img-wrap"><img src="assets/sentry_buttons.png" alt="Sentry Buttons"></div>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>&#x1F50D; Dig Deeper</h4>
+        <p>Extended Graylog trace (&plusmn;5min), GitLab blame, related MRs, full timeline</p>
+      </div>
+      <div class="col-card">
+        <h4>&#x1F4CA; Check Data</h4>
+        <p>Runs Metabase queries to verify affected records and data integrity</p>
+      </div>
+    </div>
+
+    <h4>Live from production &mdash; a real NEXUS Sentry alert:</h4>
+    <div class="img-wrap"><img src="assets/slack_sentry_live.png" alt="Live Slack"></div>
+    <blockquote>
+      <p><strong>What you're seeing:</strong> Echo detected a NEXUS process termination. The thread shows: error description, stack trace, Graylog logs (HTTP requests + KeyError), GitLab code context (commit <code>ab539882</code>, MR !1977), severity, and Resolve/Ignore buttons. All automated. Zero humans involved.</p>
+    </blockquote>
+    <h4>Screen recording:</h4>
+    <div class="img-wrap"><img src="assets/slack_demo.gif" alt="Slack Demo"></div>
+  </div>
+
+  <!-- Feature 2: Asana -->
+  <div class="feature">
+    <h3><span class="feature-num">2</span> Automated Asana Bug Triage</h3>
+    <p>Every bug ticket that lands in Asana gets the Echo treatment &mdash; classified, analyzed, and tagged before you even open it. Data issue or code bug? Echo figures it out.</p>
+    <div style="margin: 16px 0">
+      <span class="tag tag-green">ai-triaged</span>
+      <span class="tag tag-blue">data-issue</span>
+      <span class="tag tag-purple">code-issue</span>
+    </div>
+    <div class="img-wrap"><img src="assets/asana_triage.png" alt="Asana Board"></div>
+
+    <h4>Real ticket, real investigation:</h4>
+    <p>Echo was asked to look into a CRM mirror view issue. It queried databases, found the root cause, and then went above and beyond.</p>
+    <div class="img-wrap"><img src="assets/asana_echo_live.png" alt="Asana Investigation"></div>
+    <blockquote>
+      <p>Echo found that <code>auth_id</code> in clientmaster was NULL &mdash; the CRM can't resolve the auth session. But it didn't stop there...</p>
+    </blockquote>
+    <div class="img-wrap"><img src="assets/asana_echo_live_2.png" alt="Backfill Ticket"></div>
+    <blockquote>
+      <p>Echo discovered <strong>897 users</strong> had the same issue. It autonomously created a backfill ticket with the full problem description and fix instructions. That's not a chatbot. That's a teammate. &mdash; Echo &#x1FAE1;</p>
+    </blockquote>
+    <h4>Screen recording:</h4>
+    <div class="img-wrap"><img src="assets/asana_demo.gif" alt="Asana Demo"></div>
+  </div>
+
+  <!-- Feature 3: Conversational -->
+  <div class="feature">
+    <h3><span class="feature-num">3</span> Conversational @Echo</h3>
+    <p>Just tag <code>@Echo</code> on any Asana ticket or <code>@openclaw</code> in Slack. Ask a question. Echo thinks, investigates across services, and replies with a structured answer. It's like having a senior engineer on call 24/7 who never gets annoyed.</p>
+    <div class="img-wrap"><img src="assets/ops_dashboard.png" alt="Ops Dashboard"></div>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Where it works</h4>
+        <ul>
+          <li><strong>Asana</strong> &mdash; <code>@Echo &lt;question&gt;</code></li>
+          <li><strong>Slack</strong> &mdash; <code>@openclaw</code> in any channel</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <h4>What it can do</h4>
+        <ul>
+          <li>Cross-reference errors across services</li>
+          <li>Query databases via Metabase</li>
+          <li>Check GitLab MRs and blame</li>
+          <li>Full root cause analysis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature 4: WhatsApp -->
+  <div class="feature">
+    <h3><span class="feature-num">4</span> WhatsApp Newsletter</h3>
+    <p>Every Monday morning, Echo-WA fetches live market data, formats a beautiful newsletter, and sends it to the team WhatsApp group. Nifty 50, Sensex, fund NAVs, investment insights &mdash; all automated. The kind of thing that used to take 30 minutes now takes zero.</p>
+    <div class="img-wrap"><img src="assets/newsletter.png" alt="Newsletter Flow"></div>
+    <div class="img-wrap small"><img src="assets/whatsapp_newsletter.png" alt="WhatsApp Newsletter"></div>
+    <p class="caption">Actual newsletter sent by Echo to WhatsApp &mdash; live data, formatted, delivered.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ARCHITECTURE -->
+<section>
+  <p class="section-label">Architecture</p>
+  <h2>A Mac Mini. That's it.</h2>
+  <p>No Kubernetes. No cloud. No $10K/month AWS bill. Echo runs entirely on a Mac Mini M4 Pro sitting under a desk. Three agents, seven channels, twenty-four-seven.</p>
+  <div class="img-wrap"><img src="assets/architecture.png" alt="Architecture"></div>
+  <pre>                 +-------------------+
+                 |   OpenClaw GW     |
+                 |   (Mac Mini M4)   |
+                 +---------+---------+
+                           |
+            +--------------+--------------+
+            |              |              |
+      +-----+-----+ +-----+-----+ +-----+-----+
+      | Echo Main  | | Echo-Ops  | |  Echo-WA  |
+      |  convos    | | bug hunt  | | newsletter|
+      +-----+-----+ +-----+-----+ +-----+-----+
+            |              |              |
+       Slack DMs      Sentry x7     WA Group
+       Asana @Echo    Asana Triage   Weekly Send</pre>
+
+  <table>
+    <tr><th>Component</th><th>Details</th></tr>
+    <tr><td><strong>Host</strong></td><td>Mac Mini M4 Pro &mdash; 12 cores, 24GB RAM</td></tr>
+    <tr><td><strong>AI</strong></td><td>Claude Sonnet 4 (Anthropic API)</td></tr>
+    <tr><td><strong>Gateway</strong></td><td>OpenClaw v2026.3.24</td></tr>
+    <tr><td><strong>Sandbox</strong></td><td>Podman containers</td></tr>
+    <tr><td><strong>Memory</strong></td><td>Custom MCP Server (Elixir + PostgreSQL)</td></tr>
+    <tr><td><strong>Channels</strong></td><td>Slack + WhatsApp + Asana</td></tr>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- RESULTS -->
+<section>
+  <p class="section-label">Results</p>
+  <h2>Before Echo vs After Echo</h2>
+  <div class="result-highlight">
+    <div class="result-card"><span class="big">0 min</span><span class="desc">triage time (was 15-30min)</span></div>
+    <div class="result-card"><span class="big">200+</span><span class="desc">errors auto-handled daily</span></div>
+    <div class="result-card"><span class="big">2,691</span><span class="desc">lines of skill definitions</span></div>
+  </div>
+  <table>
+    <tr><th>Metric</th><th>Before</th><th>After</th></tr>
+    <tr><td>Error triage</td><td>15-30 min per error</td><td><strong style="color:#22c55e">Automated</strong></td></tr>
+    <tr><td>Bug classification</td><td>Manual, inconsistent</td><td><strong style="color:#22c55e">Auto-tagged</strong></td></tr>
+    <tr><td>Cross-service detection</td><td>Often missed</td><td><strong style="color:#22c55e">Automatic</strong></td></tr>
+    <tr><td>Newsletter</td><td>30 min/week</td><td><strong style="color:#22c55e">Zero effort</strong></td></tr>
+    <tr><td>Morning routine</td><td>Firefighting</td><td><strong style="color:#22c55e">Coffee + review</strong></td></tr>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- TECH STACK -->
+<section>
+  <p class="section-label">Tech Stack</p>
+  <h2>Built different</h2>
+  <table>
+    <tr><th>What</th><th>How</th></tr>
+    <tr><td>AI Model</td><td>Claude Sonnet 4 (Anthropic)</td></tr>
+    <tr><td>Agent Platform</td><td>OpenClaw (self-hosted)</td></tr>
+    <tr><td>Host</td><td>Mac Mini M4 Pro</td></tr>
+    <tr><td>Memory</td><td>Custom MCP Server (Elixir + PostgreSQL)</td></tr>
+    <tr><td>Messaging</td><td>Slack (Socket Mode) + WhatsApp</td></tr>
+    <tr><td>Error Tracking</td><td>Sentry (self-hosted)</td></tr>
+    <tr><td>Logs</td><td>Graylog</td></tr>
+    <tr><td>Code</td><td>GitLab</td></tr>
+    <tr><td>PM</td><td>Asana</td></tr>
+    <tr><td>Data</td><td>Metabase</td></tr>
+    <tr><td>Sandbox</td><td>Podman containers</td></tr>
+  </table>
+</section>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span class="emoji-big">&#x1FAE1;</span>
+  <h2>Echo</h2>
+  <p style="color:#71717a; font-size:1.1em; margin: 8px 0 24px;">Your AI ops team that never sleeps.</p>
+  <p><strong>Built on Claude &middot; Powered by OpenClaw &middot; Scripbox Hackathon 2026</strong></p>
+  <div style="margin-top:24px">
+    <a href="https://drive.google.com/file/d/1luekhTV4Y0NmPsa-QF6ve6MZ00Fa9OrL/view?usp=drive_link"><img src="https://img.shields.io/badge/Watch_the_Demo-2_min_video-6366f1?style=for-the-badge&logo=googledrive&logoColor=white" alt="Watch Demo"></a>
+  </div>
+</div>
+
+</body>
+</html>
