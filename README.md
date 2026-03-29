@@ -136,6 +136,12 @@ Every Monday, Echo-WA automatically:
 <img src="assets/newsletter.png" width="700" alt="WhatsApp Newsletter Data Flow">
 </div>
 
+**Actual newsletter sent by Echo to WhatsApp:**
+
+<div align="center">
+<img src="assets/whatsapp_newsletter.png" width="500" alt="WhatsApp Newsletter — Scripbox Weekly Wealth Update with live Nifty, fund NAVs, and investment insights">
+</div>
+
 **Deduplication:** Checks `newsletter.sent.{YYYY-Wnn}` key before sending — will never double-send.
 
 ---
