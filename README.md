@@ -10,9 +10,9 @@
 [![Built with Claude](https://img.shields.io/badge/Built_with-Claude_Sonnet_4-blueviolet?style=for-the-badge)](https://anthropic.com)
 [![Self Hosted](https://img.shields.io/badge/Self_Hosted-Mac_Mini_M4-black?style=for-the-badge&logo=apple)](https://www.apple.com/mac-mini/)
 
-[![Watch the Promo](https://drive.google.com/thumbnail?id=1luekhTV4Y0NmPsa-QF6ve6MZ00Fa9OrL&sz=w800)](https://drive.google.com/file/d/1luekhTV4Y0NmPsa-QF6ve6MZ00Fa9OrL/view?usp=drive_link)
+[![Watch the Promo](assets/promo_thumb.png)](https://drive.google.com/file/d/1luekhTV4Y0NmPsa-QF6ve6MZ00Fa9OrL/view?usp=drive_link)
 
-*Click to watch the 2-minute demo video*
+*Click above to watch the 2-minute demo video*
 
 </div>
 
@@ -75,14 +75,10 @@ Echo-Ops monitors 7 production Sentry channels. When an error arrives, it:
 
 > **What you're seeing:** Echo-Ops detected a NEXUS process termination in `#nexus-prod-sentry`. The thread shows the full automated analysis — error description, stack trace from Sentry, correlated Graylog logs (HTTP requests + KeyError), GitLab code context (commit `ab539882`, MR !1977), severity classification, and interactive Resolve/Ignore buttons. All within seconds, zero human involvement.
 
-**More Slack interactions:**
+**Slack Screen Recording:**
 
 <div align="center">
-<img src="assets/slack_interactive.png" width="700" alt="Slack — Echo analyzing errors with interactive buttons">
-</div>
-
-<div align="center">
-<img src="assets/slack_demo.png" width="700" alt="Slack — Echo thread with detailed error analysis">
+<img src="assets/slack_demo.gif" width="700" alt="Slack — Echo interactive triage screen recording">
 </div>
 
 ---
@@ -116,6 +112,12 @@ Here's the **actual Asana ticket** where Echo investigated a CRM mirror view iss
 > **The outcome:** After the conversation, Echo went further — it discovered this wasn't just one user. **897 users** had NULL `auth_id` in clientmaster. Echo autonomously created a backfill ticket in the "Platform Issues" project with the full problem description and fix instructions. The original ticket was moved to Closed.
 >
 > — Echo 🫡
+
+**Asana Screen Recording:**
+
+<div align="center">
+<img src="assets/asana_demo.gif" width="700" alt="Asana — Echo conversational investigation screen recording">
+</div>
 
 ---
 
