@@ -99,19 +99,21 @@ Every new bug ticket in Asana is automatically:
 <img src="assets/asana_triage.png" width="700" alt="Asana Board with AI-Triaged Tickets">
 </div>
 
-#### Real Example: Asana Ticket Investigation
+#### Real Example: Live Asana Ticket Investigation
 
-Here's an actual ticket where Echo was asked to investigate a CRM mirror view issue:
+Here's the **actual Asana ticket** where Echo investigated a CRM mirror view issue, queried databases, found the root cause, and created a fix ticket — all through conversation:
 
-> **Ticket:** Issue with the mirror client view on the web
->
-> **Echo's AI Triage** identified the service (CRM), member UUID, and checked Sentry/Graylog/GitLab for traces.
->
-> **@Echo was then asked** to check auth and clientmaster databases for lead_id mismatch.
->
-> **Echo investigated** — queried Metabase, found the investor record (id 1064799), traced the user linkage, discovered the lead_id `5275c4df-73d4-11ec-90a7-02ee030c3f8e` exists in users table but has no matching leads record.
->
-> **Echo's conclusion:** _"This looks like a data issue rather than a code/platform bug. The mirror client view depends on resolving the lead → user chain. Since the lead_id is missing from auth and no leads record exists in clientmaster, the CRM mirror lookup fails."_
+<div align="center">
+<img src="assets/asana_echo_live.png" width="700" alt="Live Asana — Echo investigating CRM mirror view issue, analyzing auth records and clientmaster data">
+</div>
+
+> **What you're seeing:** The ticket "Issue with the mirror client view on the web". Echo's analysis found the auth record exists with the correct `lead_id`, but `auth_id` in clientmaster is NULL — so the two systems aren't linked. The CRM can't resolve the auth session. Echo identified the fix: update `clientmaster.accounts_user.auth_id` for the affected user.
+
+<div align="center">
+<img src="assets/asana_echo_live_2.png" width="700" alt="Live Asana — Echo created a backfill ticket for 897 users with NULL auth_id">
+</div>
+
+> **The outcome:** After the conversation, Echo went further — it discovered this wasn't just one user. **897 users** had NULL `auth_id` in clientmaster. Echo autonomously created a backfill ticket in the "Platform Issues" project with the full problem description and fix instructions. The original ticket was moved to Closed.
 >
 > — Echo 🫡
 
