@@ -198,24 +198,133 @@
   .footer h2 { font-size: 2em; }
   .footer p { color: #52525b; }
 
-  @media (max-width: 640px) {
-    .hero h1 { font-size: 2.8em; }
-    .agent-cards { grid-template-columns: 1fr; }
-    .two-col { grid-template-columns: 1fr; }
-    .result-highlight { grid-template-columns: 1fr; }
-    .stat-row { flex-direction: column; align-items: center; }
-    .feature { padding: 24px; }
-    .rbac-grid { grid-template-columns: 1fr; }
-    .channel-grid { grid-template-columns: 1fr; }
-    .flow-steps { gap: 4px; }
-    .flow-step { min-width: 80px; padding: 10px 12px; }
-    .flow-step .flow-icon { font-size: 1.2em; }
-    .flow-step .flow-label { font-size: 0.7em; }
-    .flow-arrow { font-size: 1em; padding: 0 2px; }
-    .cron-row { flex-wrap: wrap; gap: 8px; }
-    .cron-interval { min-width: auto; }
-    .back-to-top { bottom: 20px; right: 20px; width: 38px; height: 38px; font-size: 1em; }
-    .triage-btns { grid-template-columns: 1fr !important; }
+  /* Tablet */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 3em; }
+    h2 { font-size: 1.8em; }
+    h3 { font-size: 1.3em; }
+    .agent-cards { grid-template-columns: 1fr 1fr; }
+    .result-highlight { grid-template-columns: 1fr 1fr; }
+    .triage-btns { grid-template-columns: 1fr 1fr !important; }
+    section { padding: 44px 0; }
+    .feature { padding: 28px; }
+  }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    /* Hero */
+    .hero { padding: 48px 16px 40px; }
+    .hero h1 { font-size: 2.4em; letter-spacing: -1px; }
+    .emoji-big { font-size: 3.5em; margin-bottom: 10px; }
+    .hero .tagline { font-size: 1.1em; }
+    .hero .sub { font-size: 0.85em; margin-bottom: 20px; }
+    .badges { gap: 6px; }
+    .badges img { height: 28px; }
+    .play-btn { width: 52px; height: 52px; }
+    .play-btn::after { border-left-width: 16px; border-top-width: 10px; border-bottom-width: 10px; margin-left: 3px; }
+    .hero-caption { font-size: 0.8em; }
+
+    /* Layout */
+    .container { padding: 0 16px; }
+    section { padding: 36px 0; }
+
+    /* Typography */
+    h2 { font-size: 1.5em; letter-spacing: -0.5px; margin-bottom: 12px; }
+    h3 { font-size: 1.2em; }
+    h4 { font-size: 1em; margin: 16px 0 6px; }
+    .section-label { font-size: 0.7em; letter-spacing: 2px; }
+    p { font-size: 0.92em; margin-bottom: 10px; }
+
+    /* Grids → single column */
+    .agent-cards { grid-template-columns: 1fr; gap: 12px; }
+    .two-col { grid-template-columns: 1fr; gap: 12px; }
+    .result-highlight { grid-template-columns: 1fr; gap: 12px; }
+    .rbac-grid { grid-template-columns: 1fr; gap: 12px; }
+    .channel-grid { grid-template-columns: 1fr; gap: 8px; }
+    .triage-btns { grid-template-columns: 1fr !important; gap: 12px !important; }
+
+    /* Stat cards */
+    .stat-row { flex-direction: column; align-items: stretch; gap: 12px; }
+    .stat { min-width: auto; padding: 16px 20px; }
+    .stat .num { font-size: 1.8em; }
+
+    /* Feature cards */
+    .feature { padding: 20px; margin: 16px 0; border-radius: 16px; }
+    .col-card { padding: 16px; }
+
+    /* Tables — horizontal scroll */
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
+    th, td { padding: 10px 12px; font-size: 0.8em; }
+
+    /* Pre blocks — horizontal scroll, smaller text */
+    pre { font-size: 0.7em; padding: 14px; white-space: pre; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    /* Code — prevent overflow */
+    code { font-size: 0.78em; word-break: break-all; }
+
+    /* Flow diagram → vertical on mobile */
+    .flow-steps { flex-direction: column; align-items: center; gap: 0; }
+    .flow-step { min-width: 160px; width: 70%; padding: 12px 16px; }
+    .flow-step .flow-icon { font-size: 1.3em; }
+    .flow-step .flow-label { font-size: 0.8em; }
+    .flow-arrow { transform: rotate(90deg); padding: 4px 0; font-size: 1.2em; }
+
+    /* Cron rows */
+    .cron-row { flex-wrap: wrap; gap: 6px; padding: 12px 0; }
+    .cron-interval { min-width: auto; font-size: 0.7em; padding: 3px 10px; }
+    .cron-info strong { font-size: 0.85em; }
+    .cron-info span { font-size: 0.78em; }
+    .cron-agent { font-size: 0.7em; }
+
+    /* Skill bars */
+    .skill-bar-label { flex-direction: column; gap: 2px; }
+    .skill-bar-label strong { font-size: 0.82em; }
+    .skill-bar-label span { font-size: 0.72em; }
+
+    /* Blockquote */
+    blockquote { padding: 12px 14px; margin: 14px 0; }
+    blockquote p { font-size: 0.88em; }
+
+    /* Images */
+    .img-wrap { margin: 16px 0; }
+    .img-wrap.small img { max-width: 100%; }
+
+    /* Results cards */
+    .result-card { padding: 16px; }
+    .result-card .big { font-size: 1.6em; }
+    .result-card .desc { font-size: 0.78em; }
+
+    /* RBAC cards */
+    .rbac-card { padding: 18px; }
+    .rbac-card h4 { font-size: 0.95em; }
+    .rbac-card p { font-size: 0.82em; }
+
+    /* Channel pills */
+    .channel-pill { padding: 10px 14px; }
+    .channel-pill .ch-name { font-size: 0.75em; }
+
+    /* Footer */
+    .footer { padding: 48px 16px; }
+    .footer h2 { font-size: 1.6em; }
+    .footer .emoji-big { font-size: 3.5em; }
+
+    /* Back to top */
+    .back-to-top { bottom: 16px; right: 16px; width: 38px; height: 38px; font-size: 1em; }
+
+    /* Nav — hide text, show brand only on very small */
+    .sticky-nav a { padding: 5px 8px; font-size: 0.68em; }
+    .nav-brand { font-size: 0.78em !important; }
+
+    /* Agent cards — tighter */
+    .agent-card { padding: 18px; }
+    .agent-card .agent-emoji { font-size: 2em; }
+
+    /* Tags */
+    .tag { font-size: 0.72em; padding: 2px 10px; }
+
+    /* Security badges */
+    .security-badges { gap: 12px !important; flex-direction: column; }
+    .security-badges span { font-size: 0.78em !important; }
   }
 </style>
 </head>
@@ -512,7 +621,7 @@
       <tr><td><strong>Echo-Ops</strong></td><td>7 Sentry channels, Asana triage, KB</td><td>DMs, WhatsApp, newsletter</td></tr>
       <tr><td><strong>Echo-WA</strong></td><td>WhatsApp Echo group (allowlist)</td><td>Slack, Sentry, Asana</td></tr>
     </table>
-    <div style="display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap;">
+    <div class="security-badges" style="display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap;">
       <span style="color: #4ade80; font-size: 0.85em; font-weight: 600;">Cross-talk: BLOCKED</span>
       <span style="color: #4ade80; font-size: 0.85em; font-weight: 600;">Privilege escalation: BLOCKED</span>
       <span style="color: #4ade80; font-size: 0.85em; font-weight: 600;">Container escape: NOT POSSIBLE</span>
