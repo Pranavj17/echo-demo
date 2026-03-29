@@ -4,11 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Echo - AI Ops Agent | Scripbox</title>
+<meta name="description" content="Scripbox's multi-agent AI operations platform — 3 agents, 7 Sentry channels, zero manual triage. Built on Claude, powered by OpenClaw.">
+<meta property="og:title" content="Echo — Your AI Ops Team That Never Sleeps">
+<meta property="og:description" content="Multi-agent AI ops platform. 200+ daily errors triaged automatically across 7 microservices. Built on Claude Sonnet 4.">
+<meta property="og:image" content="https://pranavj17.github.io/echo-demo/assets/promo_thumb.png">
+<meta property="og:url" content="https://pranavj17.github.io/echo-demo/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body { font-family: 'Inter', -apple-system, sans-serif; background: #09090b; color: #e4e4e7; line-height: 1.7; }
+
+  /* Sticky nav */
+  .sticky-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(9,9,11,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1c1c22;
+    padding: 0 24px;
+    overflow-x: auto; white-space: nowrap;
+    scrollbar-width: none;
+  }
+  .sticky-nav::-webkit-scrollbar { display: none; }
+  .sticky-nav-inner { max-width: 880px; margin: 0 auto; display: flex; align-items: center; gap: 4px; padding: 8px 0; }
+  .sticky-nav a { color: #52525b; font-size: 0.75em; font-weight: 600; padding: 6px 12px; border-radius: 8px; transition: color 0.2s, background 0.2s; text-decoration: none; letter-spacing: 0.3px; }
+  .sticky-nav a:hover { color: #e4e4e7; background: #18181b; }
+  .nav-brand { color: #e4e4e7 !important; font-weight: 800; font-size: 0.85em !important; margin-right: 8px; letter-spacing: -0.5px; }
+
+  /* Back to top */
+  .back-to-top { position: fixed; bottom: 32px; right: 32px; z-index: 99; width: 44px; height: 44px; border-radius: 50%; background: #6366f1; color: white; border: none; cursor: pointer; font-size: 1.2em; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(99,102,241,0.4); opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; }
+  .back-to-top.visible { opacity: 1; pointer-events: auto; }
+  .back-to-top:hover { transform: scale(1.1); }
   a { color: #818cf8; text-decoration: none; }
   a:hover { color: #a5b4fc; }
   img { max-width: 100%; border-radius: 12px; }
@@ -51,7 +79,7 @@
 
   /* Container */
   .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
-  section { padding: 60px 0; }
+  section { padding: 60px 0; scroll-margin-top: 56px; }
 
   /* Section headers */
   .section-label { text-transform: uppercase; letter-spacing: 3px; font-size: 0.8em; font-weight: 600; color: #6366f1; margin-bottom: 8px; }
@@ -155,7 +183,7 @@
   .skill-bar-label strong { color: #e4e4e7; font-size: 0.9em; }
   .skill-bar-label span { color: #6366f1; font-family: 'JetBrains Mono', monospace; font-size: 0.8em; }
   .skill-bar { height: 8px; background: #27272a; border-radius: 4px; overflow: hidden; }
-  .skill-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #6366f1, #818cf8); transition: width 1s ease; }
+  .skill-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #6366f1, #818cf8); transition: width 1s ease; min-width: 20px; }
 
   /* Flow diagram */
   .flow-steps { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; margin: 32px 0; }
@@ -177,13 +205,42 @@
     .result-highlight { grid-template-columns: 1fr; }
     .stat-row { flex-direction: column; align-items: center; }
     .feature { padding: 24px; }
+    .rbac-grid { grid-template-columns: 1fr; }
+    .channel-grid { grid-template-columns: 1fr; }
+    .flow-steps { gap: 4px; }
+    .flow-step { min-width: 80px; padding: 10px 12px; }
+    .flow-step .flow-icon { font-size: 1.2em; }
+    .flow-step .flow-label { font-size: 0.7em; }
+    .flow-arrow { font-size: 1em; padding: 0 2px; }
+    .cron-row { flex-wrap: wrap; gap: 8px; }
+    .cron-interval { min-width: auto; }
+    .back-to-top { bottom: 20px; right: 20px; width: 38px; height: 38px; font-size: 1em; }
+    .triage-btns { grid-template-columns: 1fr !important; }
   }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
+<nav class="sticky-nav">
+  <div class="sticky-nav-inner">
+    <a href="#hero" class="nav-brand">Echo</a>
+    <a href="#problem">Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#features">Features</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#security">RBAC</a>
+    <a href="#monitoring">Monitoring</a>
+    <a href="#automation">Cron</a>
+    <a href="#skills">Skills</a>
+    <a href="#memory">Memory</a>
+    <a href="#results">Results</a>
+  </div>
+</nav>
+
 <!-- HERO -->
-<div class="hero">
+<div class="hero" id="hero">
   <div class="hero-content">
     <span class="emoji-big">&#x1FAE1;</span>
     <h1>Echo</h1>
@@ -205,7 +262,7 @@
 <div class="container">
 
 <!-- THE PROBLEM -->
-<section>
+<section id="problem">
   <p class="section-label">The Problem</p>
   <h2>200+ errors a day. One tired engineer.</h2>
   <p>Scripbox engineering deals with production errors across 7 microservices. Every. Single. Day. Each error needs manual triage &mdash; Sentry for traces, Graylog for logs, GitLab for code, Asana for context. That's 15-30 minutes per error, and they pile up fast.</p>
@@ -220,7 +277,7 @@
 <div class="divider"></div>
 
 <!-- THE SOLUTION -->
-<section>
+<section id="solution">
   <p class="section-label">The Solution</p>
   <h2>Three agents. One brain. Zero babysitting.</h2>
   <p>Echo is a multi-agent AI system that handles production operations <strong>autonomously</strong>. It runs 24/7 on a Mac Mini under someone's desk. No cloud. No fuss. Just works.</p>
@@ -250,7 +307,7 @@
 <div class="divider"></div>
 
 <!-- FEATURES -->
-<section>
+<section id="features">
   <p class="section-label">Features</p>
   <h2>What Echo actually does</h2>
 
@@ -259,14 +316,18 @@
     <h3><span class="feature-num">1</span> Interactive Sentry Triage</h3>
     <p>When a production error hits, Echo doesn't just notify you &mdash; it <strong>investigates</strong>. It pulls the Sentry stack trace, searches Graylog for correlated logs, checks GitLab for who changed what, and drops the analysis right in your Slack thread. Then it asks: <em>what do you want to do?</em></p>
     <div class="img-wrap"><img src="assets/sentry_buttons.png" alt="Sentry Buttons"></div>
-    <div class="two-col">
+    <div class="triage-btns" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 16px 0;">
       <div class="col-card">
         <h4>&#x1F50D; Dig Deeper</h4>
-        <p>Extended Graylog trace (&plusmn;5min), GitLab blame, related MRs, full timeline</p>
+        <p>Extended Graylog trace (&plusmn;5min), GitLab blame, related MRs</p>
       </div>
       <div class="col-card">
         <h4>&#x1F4CA; Check Data</h4>
-        <p>Runs Metabase queries to verify affected records and data integrity</p>
+        <p>Metabase queries to verify affected records and integrity</p>
+      </div>
+      <div class="col-card">
+        <h4>&#x1F6AB; Ignore</h4>
+        <p>Marks as triaged, saves decision to knowledge base for next time</p>
       </div>
     </div>
 
@@ -342,7 +403,7 @@
 <div class="divider"></div>
 
 <!-- ARCHITECTURE -->
-<section>
+<section id="architecture">
   <p class="section-label">Architecture</p>
   <h2>A Mac Mini. That's it.</h2>
   <p>No Kubernetes. No cloud. No $10K/month AWS bill. Echo runs entirely on a Mac Mini M4 Pro sitting under a desk. Three agents, seven channels, twenty-four-seven.</p>
@@ -376,7 +437,7 @@
 <div class="divider"></div>
 
 <!-- HOW IT WORKS -->
-<section>
+<section id="how-it-works">
   <p class="section-label">How It Works</p>
   <h2>Error in. Analysis out. Humans optional.</h2>
   <p>When a production error fires, here's what happens &mdash; automatically, in seconds, with zero human involvement:</p>
@@ -415,7 +476,7 @@
 <div class="divider"></div>
 
 <!-- RBAC -->
-<section>
+<section id="security">
   <p class="section-label">Security</p>
   <h2>Every agent. Every channel. Permission-controlled.</h2>
   <p>Echo doesn't run wild. Every agent has strict <strong>role-based access control</strong> with zero crosstalk between channels. The ops bot can't accidentally post in your DMs. The newsletter bot can't touch Sentry channels. Lock it down, sleep well.</p>
@@ -443,21 +504,26 @@
     </div>
   </div>
 
-  <pre>&#x1F512; Access Matrix
-
-Echo Main &#x1FAE1;    &#x2192; Slack DMs, Asana @Echo, WhatsApp newsletter
-Echo-Ops &#x1F527;    &#x2192; 7 Sentry channels, Asana bug triage, KB
-Echo-WA  &#x1F4F1;    &#x2192; WhatsApp Echo group (allowlist only)
-
-Cross-talk:     BLOCKED
-Privilege escalation: BLOCKED
-Container escape:     NOT POSSIBLE (capDrop: ALL)</pre>
+  <div class="feature" style="margin-top: 24px; border-color: #166534; background: linear-gradient(135deg, #052e16 0%, #0f0f12 40%);">
+    <h4 style="margin-top:0; color: #4ade80;">Access Matrix</h4>
+    <table>
+      <tr><th>Agent</th><th>Has Access To</th><th>Blocked From</th></tr>
+      <tr><td><strong>Echo Main</strong></td><td>Slack DMs, Asana @Echo, WA newsletter</td><td>Sentry channels, bug triage</td></tr>
+      <tr><td><strong>Echo-Ops</strong></td><td>7 Sentry channels, Asana triage, KB</td><td>DMs, WhatsApp, newsletter</td></tr>
+      <tr><td><strong>Echo-WA</strong></td><td>WhatsApp Echo group (allowlist)</td><td>Slack, Sentry, Asana</td></tr>
+    </table>
+    <div style="display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap;">
+      <span style="color: #4ade80; font-size: 0.85em; font-weight: 600;">Cross-talk: BLOCKED</span>
+      <span style="color: #4ade80; font-size: 0.85em; font-weight: 600;">Privilege escalation: BLOCKED</span>
+      <span style="color: #4ade80; font-size: 0.85em; font-weight: 600;">Container escape: NOT POSSIBLE</span>
+    </div>
+  </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- 7-CHANNEL MONITORING -->
-<section>
+<section id="monitoring">
   <p class="section-label">Monitoring</p>
   <h2>Seven channels. Fifteen-minute cycles. Never off.</h2>
   <p>Echo-Ops watches these production Sentry channels around the clock. Every 15 minutes, it polls for new errors, analyzes them, and posts to the relevant Slack thread. Nothing slips through.</p>
@@ -497,7 +563,7 @@ Container escape:     NOT POSSIBLE (capDrop: ALL)</pre>
 <div class="divider"></div>
 
 <!-- CRON JOBS -->
-<section>
+<section id="automation">
   <p class="section-label">Automation</p>
   <h2>Five cron jobs. Zero human babysitting.</h2>
   <p>Echo runs on a heartbeat. These scheduled jobs keep everything moving &mdash; polling Sentry, triaging Asana, processing @mentions, cleaning up the knowledge base, and sending newsletters. All automated. All reliable.</p>
@@ -534,7 +600,7 @@ Container escape:     NOT POSSIBLE (capDrop: ALL)</pre>
 <div class="divider"></div>
 
 <!-- SKILLS -->
-<section>
+<section id="skills">
   <p class="section-label">Skills</p>
   <h2>2,691 lines of instructions. Echo knows things.</h2>
   <p>Echo's capabilities are defined as <strong>Skills</strong> &mdash; modular, versioned instruction sets that tell each agent exactly how to handle complex multi-step operations. These aren't prompts. They're battle-tested playbooks.</p>
@@ -584,7 +650,7 @@ Container escape:     NOT POSSIBLE (capDrop: ALL)</pre>
 <div class="divider"></div>
 
 <!-- MEMORY MCP -->
-<section>
+<section id="memory">
   <p class="section-label">Shared Brain</p>
   <h2>Three agents. One memory. Zero amnesia.</h2>
   <p>Echo uses a custom <strong>Memory MCP Server</strong> &mdash; a PostgreSQL-backed shared memory layer that gives all three agents persistent, searchable knowledge. What Echo-Ops learns today, Echo Main remembers tomorrow.</p>
@@ -605,7 +671,7 @@ Container escape:     NOT POSSIBLE (capDrop: ALL)</pre>
 <div class="divider"></div>
 
 <!-- RESULTS -->
-<section>
+<section id="results">
   <p class="section-label">Results</p>
   <h2>Before Echo vs After Echo</h2>
   <div class="result-highlight">
@@ -658,5 +724,26 @@ Container escape:     NOT POSSIBLE (capDrop: ALL)</pre>
   </div>
 </div>
 
+<button class="back-to-top" id="btt" onclick="window.scrollTo({top:0})" aria-label="Back to top">&uarr;</button>
+
+<script>
+// Back to top visibility
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('visible', window.scrollY > 600);
+}, { passive: true });
+
+// Offset scroll targets for sticky nav
+document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const navH = document.querySelector('.sticky-nav').offsetHeight;
+      window.scrollTo({ top: target.offsetTop - navH - 8, behavior: 'smooth' });
+    }
+  });
+});
+</script>
 </body>
 </html>
