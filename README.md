@@ -67,14 +67,18 @@ Echo-Ops monitors 7 production Sentry channels. When an error arrives, it:
 - **Check Data** — Runs Metabase queries to verify affected records
 - **Ignore** — Marks as triaged, saves decision to knowledge base
 
-**Slack Interactive Triage — Live Screen Recording:**
+**Live Slack — Echo analyzing a NEXUS Sentry alert in production:**
 
 <div align="center">
-<video src="https://github.com/Pranavj17/echo-demo/raw/main/assets/slack_demo.mp4" width="700" controls></video>
+<img src="assets/slack_sentry_live.png" width="700" alt="Live Slack — Echo's full Sentry analysis thread with What Happened, Stack Trace, Graylog logs, GitLab code context, and Resolve/Ignore buttons">
 </div>
 
+> **What you're seeing:** Echo-Ops detected a NEXUS process termination in `#nexus-prod-sentry`. The thread shows the full automated analysis — error description, stack trace from Sentry, correlated Graylog logs (HTTP requests + KeyError), GitLab code context (commit `ab539882`, MR !1977), severity classification, and interactive Resolve/Ignore buttons. All within seconds, zero human involvement.
+
+**More Slack interactions:**
+
 <div align="center">
-<img src="assets/slack_interactive.png" width="700" alt="Slack — Echo analyzing a Sentry alert with interactive buttons">
+<img src="assets/slack_interactive.png" width="700" alt="Slack — Echo analyzing errors with interactive buttons">
 </div>
 
 <div align="center">
