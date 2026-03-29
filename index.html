@@ -124,6 +124,46 @@
   .result-card .big { font-size: 2em; font-weight: 900; color: #22c55e; display: block; }
   .result-card .desc { font-size: 0.85em; color: #71717a; }
 
+  /* RBAC lock grid */
+  .rbac-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+  .rbac-card { background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 24px; position: relative; overflow: hidden; }
+  .rbac-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #6366f1; border-radius: 4px 0 0 4px; }
+  .rbac-card h4 { margin: 0 0 6px; color: #fafafa; padding-left: 12px; }
+  .rbac-card p { margin: 0; font-size: 0.9em; color: #71717a; padding-left: 12px; }
+  .rbac-card code { font-size: 0.8em; }
+
+  /* Channel pills */
+  .channel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 24px 0; }
+  .channel-pill { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 10px; transition: border-color 0.3s; }
+  .channel-pill:hover { border-color: #6366f1; }
+  .channel-pill .ch-hash { color: #6366f1; font-weight: 700; font-size: 1.2em; }
+  .channel-pill .ch-name { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: #a1a1aa; }
+  .channel-pill .ch-svc { font-size: 0.75em; color: #52525b; display: block; }
+
+  /* Cron timeline */
+  .cron-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid #1c1c22; }
+  .cron-row:last-child { border-bottom: none; }
+  .cron-interval { background: #1e1b4b; color: #818cf8; font-family: 'JetBrains Mono', monospace; font-size: 0.8em; font-weight: 600; padding: 4px 12px; border-radius: 20px; min-width: 72px; text-align: center; white-space: nowrap; }
+  .cron-info { flex: 1; }
+  .cron-info strong { color: #e4e4e7; font-size: 0.95em; }
+  .cron-info span { color: #71717a; font-size: 0.85em; display: block; margin-top: 2px; }
+  .cron-agent { font-size: 0.8em; color: #6366f1; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+
+  /* Skill bars */
+  .skill-bar-wrap { margin: 8px 0; }
+  .skill-bar-label { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .skill-bar-label strong { color: #e4e4e7; font-size: 0.9em; }
+  .skill-bar-label span { color: #6366f1; font-family: 'JetBrains Mono', monospace; font-size: 0.8em; }
+  .skill-bar { height: 8px; background: #27272a; border-radius: 4px; overflow: hidden; }
+  .skill-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #6366f1, #818cf8); transition: width 1s ease; }
+
+  /* Flow diagram */
+  .flow-steps { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; margin: 32px 0; }
+  .flow-step { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 14px 18px; text-align: center; min-width: 120px; }
+  .flow-step .flow-icon { font-size: 1.6em; display: block; margin-bottom: 4px; }
+  .flow-step .flow-label { font-size: 0.8em; color: #a1a1aa; font-weight: 500; }
+  .flow-arrow { color: #6366f1; font-size: 1.4em; padding: 0 6px; font-weight: 700; }
+
   /* Footer */
   .footer { text-align: center; padding: 80px 20px; background: radial-gradient(ellipse at bottom, #1e1b4b 0%, #09090b 70%); }
   .footer .emoji-big { animation: wave 3s ease-in-out infinite; }
@@ -331,6 +371,235 @@
     <tr><td><strong>Memory</strong></td><td>Custom MCP Server (Elixir + PostgreSQL)</td></tr>
     <tr><td><strong>Channels</strong></td><td>Slack + WhatsApp + Asana</td></tr>
   </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section>
+  <p class="section-label">How It Works</p>
+  <h2>Error in. Analysis out. Humans optional.</h2>
+  <p>When a production error fires, here's what happens &mdash; automatically, in seconds, with zero human involvement:</p>
+
+  <div class="flow-steps">
+    <div class="flow-step"><span class="flow-icon">&#x1F6A8;</span><span class="flow-label">Sentry Alert</span></div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-step"><span class="flow-icon">&#x1F50D;</span><span class="flow-label">Stack Trace</span></div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-step"><span class="flow-icon">&#x1F4DC;</span><span class="flow-label">Graylog Logs</span></div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-step"><span class="flow-icon">&#x1F4BB;</span><span class="flow-label">GitLab Blame</span></div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-step"><span class="flow-icon">&#x1F4CA;</span><span class="flow-label">Metabase Check</span></div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-step"><span class="flow-icon">&#x1F4AC;</span><span class="flow-label">Slack Thread</span></div>
+  </div>
+
+  <p>Each step queries a <strong>different production system</strong> in real time. Echo cross-correlates the evidence &mdash; matching timestamps, tracing request IDs, identifying the exact commit that broke things &mdash; and drops a structured analysis in your Slack thread with interactive buttons to take action.</p>
+
+  <div class="feature" style="margin-top: 24px;">
+    <h4>The pipeline, step by step:</h4>
+    <ol>
+      <li><strong>Sentry polling</strong> &mdash; Every 15 min, Echo-Ops checks 7 Sentry channels for new alerts</li>
+      <li><strong>Stack trace extraction</strong> &mdash; Full error context, exception type, affected endpoint</li>
+      <li><strong>Log correlation</strong> &mdash; Graylog search in a &plusmn;5 minute window around the error timestamp</li>
+      <li><strong>Code context</strong> &mdash; GitLab blame at the error location, recent MRs touching that file</li>
+      <li><strong>Data verification</strong> &mdash; Metabase queries to check if it's a data issue or code bug</li>
+      <li><strong>Classification</strong> &mdash; AI-powered scoring: <span class="tag tag-blue">data-issue</span> vs <span class="tag tag-purple">code-issue</span></li>
+      <li><strong>Slack delivery</strong> &mdash; Structured thread reply with Block Kit buttons for next steps</li>
+      <li><strong>Knowledge base</strong> &mdash; Decision saved to Memory MCP for future reference</li>
+    </ol>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RBAC -->
+<section>
+  <p class="section-label">Security</p>
+  <h2>Every agent. Every channel. Permission-controlled.</h2>
+  <p>Echo doesn't run wild. Every agent has strict <strong>role-based access control</strong> with zero crosstalk between channels. The ops bot can't accidentally post in your DMs. The newsletter bot can't touch Sentry channels. Lock it down, sleep well.</p>
+
+  <div class="rbac-grid">
+    <div class="rbac-card">
+      <h4>&#x1F512; Channel-Level Access</h4>
+      <p><code>#sentry-channels</code> &rarr; echo-ops only<br>
+      <code>#pranav-direct</code> &rarr; main agent only<br>
+      WhatsApp group &rarr; echo-wa only</p>
+    </div>
+    <div class="rbac-card">
+      <h4>&#x1F464; Agent-Based Rules</h4>
+      <p>Bot messages &rarr; <code>allowBots: true</code> (Sentry)<br>
+      Human messages &rarr; <code>allowBots: false</code> (DMs)<br>
+      Group policy &rarr; open (Slack) / allowlist (WA)</p>
+    </div>
+    <div class="rbac-card">
+      <h4>&#x1F4E6; Sandboxed Execution</h4>
+      <p>Non-main agents run in <strong>Podman containers</strong> &mdash; isolated filesystem, dropped capabilities, bridge networking. They can't touch the host.</p>
+    </div>
+    <div class="rbac-card">
+      <h4>&#x1F511; Token Isolation</h4>
+      <p>Each agent gets only the tokens it needs. Env vars ending in <code>_TOKEN</code>, <code>_SECRET</code>, <code>_API_KEY</code> are <strong>blocked by default</strong> &mdash; must use renamed vars.</p>
+    </div>
+  </div>
+
+  <pre>&#x1F512; Access Matrix
+
+Echo Main &#x1FAE1;    &#x2192; Slack DMs, Asana @Echo, WhatsApp newsletter
+Echo-Ops &#x1F527;    &#x2192; 7 Sentry channels, Asana bug triage, KB
+Echo-WA  &#x1F4F1;    &#x2192; WhatsApp Echo group (allowlist only)
+
+Cross-talk:     BLOCKED
+Privilege escalation: BLOCKED
+Container escape:     NOT POSSIBLE (capDrop: ALL)</pre>
+</section>
+
+<div class="divider"></div>
+
+<!-- 7-CHANNEL MONITORING -->
+<section>
+  <p class="section-label">Monitoring</p>
+  <h2>Seven channels. Fifteen-minute cycles. Never off.</h2>
+  <p>Echo-Ops watches these production Sentry channels around the clock. Every 15 minutes, it polls for new errors, analyzes them, and posts to the relevant Slack thread. Nothing slips through.</p>
+
+  <div class="channel-grid">
+    <div class="channel-pill">
+      <span class="ch-hash">#</span>
+      <div><span class="ch-name">clientmaster-prod-sentry</span><span class="ch-svc">clientmaster</span></div>
+    </div>
+    <div class="channel-pill">
+      <span class="ch-hash">#</span>
+      <div><span class="ch-name">auth-prod-sentry</span><span class="ch-svc">auth</span></div>
+    </div>
+    <div class="channel-pill">
+      <span class="ch-hash">#</span>
+      <div><span class="ch-name">nexus-prod-sentry</span><span class="ch-svc">nexus</span></div>
+    </div>
+    <div class="channel-pill">
+      <span class="ch-hash">#</span>
+      <div><span class="ch-name">milky-way-prod-sentry</span><span class="ch-svc">milky-way</span></div>
+    </div>
+    <div class="channel-pill">
+      <span class="ch-hash">#</span>
+      <div><span class="ch-name">heimdall-prod-sentry</span><span class="ch-svc">heimdall</span></div>
+    </div>
+    <div class="channel-pill">
+      <span class="ch-hash">#</span>
+      <div><span class="ch-name">order-fulfillment-prod-sentry</span><span class="ch-svc">order-fulfillment</span></div>
+    </div>
+    <div class="channel-pill">
+      <span class="ch-hash">#</span>
+      <div><span class="ch-name">myscripbox-api-prod-sentry</span><span class="ch-svc">myscripbox</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CRON JOBS -->
+<section>
+  <p class="section-label">Automation</p>
+  <h2>Five cron jobs. Zero human babysitting.</h2>
+  <p>Echo runs on a heartbeat. These scheduled jobs keep everything moving &mdash; polling Sentry, triaging Asana, processing @mentions, cleaning up the knowledge base, and sending newsletters. All automated. All reliable.</p>
+
+  <div class="feature">
+    <div class="cron-row">
+      <span class="cron-interval">15 min</span>
+      <div class="cron-info"><strong>sentry-poll-all</strong><span>Poll 7 Sentry channels, analyze alerts, post interactive triage</span></div>
+      <span class="cron-agent">echo-ops</span>
+    </div>
+    <div class="cron-row">
+      <span class="cron-interval">15 min</span>
+      <div class="cron-info"><strong>asana-rca-triager</strong><span>Triage new bugs &mdash; classify, analyze with 5 MCP servers, tag</span></div>
+      <span class="cron-agent">echo-ops</span>
+    </div>
+    <div class="cron-row">
+      <span class="cron-interval">2 min</span>
+      <div class="cron-info"><strong>asana-echo-responder</strong><span>Process @Echo mention queue, spawn sub-agents for answers</span></div>
+      <span class="cron-agent">main</span>
+    </div>
+    <div class="cron-row">
+      <span class="cron-interval">weekly</span>
+      <div class="cron-info"><strong>kb-maintenance</strong><span>Knowledge base cleanup &mdash; deduplicate, archive stale entries</span></div>
+      <span class="cron-agent">echo-ops</span>
+    </div>
+    <div class="cron-row">
+      <span class="cron-interval">weekly</span>
+      <div class="cron-info"><strong>wa-newsletter</strong><span>Fetch market data, format newsletter, send to WhatsApp group</span></div>
+      <span class="cron-agent">main</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section>
+  <p class="section-label">Skills</p>
+  <h2>2,691 lines of instructions. Echo knows things.</h2>
+  <p>Echo's capabilities are defined as <strong>Skills</strong> &mdash; modular, versioned instruction sets that tell each agent exactly how to handle complex multi-step operations. These aren't prompts. They're battle-tested playbooks.</p>
+
+  <div class="feature">
+    <div class="skill-bar-wrap">
+      <div class="skill-bar-label"><strong>sentry-review</strong> &mdash; Analysis &rarr; Interactive Triage &rarr; Auto-Fix MR<span>1,003 lines</span></div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width: 37%"></div></div>
+    </div>
+    <div class="skill-bar-wrap">
+      <div class="skill-bar-label"><strong>asana-rca-triager</strong> &mdash; Fetch &rarr; Classify &rarr; Multi-source &rarr; Tag<span>1,215 lines</span></div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width: 45%"></div></div>
+    </div>
+    <div class="skill-bar-wrap">
+      <div class="skill-bar-label"><strong>wa-newsletter</strong> &mdash; Market data &rarr; Theme &rarr; Format &rarr; Send<span>367 lines</span></div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width: 14%"></div></div>
+    </div>
+    <div class="skill-bar-wrap">
+      <div class="skill-bar-label"><strong>asana-echo-responder</strong> &mdash; Queue &rarr; Sub-agent &rarr; Answer<span>106 lines</span></div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width: 4%"></div></div>
+    </div>
+  </div>
+
+  <p>Each skill is a multi-phase playbook. For example, <strong>sentry-review</strong> has three phases:</p>
+  <div class="two-col">
+    <div class="col-card">
+      <h4>Phase 1: Analysis</h4>
+      <p>Sentry trace + Graylog logs + GitLab blame = structured error report posted to Slack</p>
+    </div>
+    <div class="col-card">
+      <h4>Phase 1.5: Interactive Triage</h4>
+      <p>Block Kit buttons (Dig Deeper / Check Data / Ignore) — polls for human click, handles choice</p>
+    </div>
+  </div>
+  <div class="two-col" style="margin-top: 0;">
+    <div class="col-card">
+      <h4>Phase 2: Auto-Fix MR</h4>
+      <p>Creates a GitLab branch, writes regression test first, pushes fix MR, verifies pipeline passes</p>
+    </div>
+    <div class="col-card">
+      <h4>Knowledge Base</h4>
+      <p>Every decision saved to Memory MCP &mdash; next time the same error hits, Echo already knows the answer</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MEMORY MCP -->
+<section>
+  <p class="section-label">Shared Brain</p>
+  <h2>Three agents. One memory. Zero amnesia.</h2>
+  <p>Echo uses a custom <strong>Memory MCP Server</strong> &mdash; a PostgreSQL-backed shared memory layer that gives all three agents persistent, searchable knowledge. What Echo-Ops learns today, Echo Main remembers tomorrow.</p>
+
+  <div class="feature">
+    <table>
+      <tr><th>Key Pattern</th><th>Used By</th><th>Purpose</th></tr>
+      <tr><td><code>newsletter.theme.current</code></td><td>Echo-WA</td><td>This week's investment theme</td></tr>
+      <tr><td><code>newsletter.product_update.current</code></td><td>Echo-WA</td><td>Optional product update</td></tr>
+      <tr><td><code>newsletter.sent.{YYYY-Wnn}</code></td><td>Echo-WA</td><td>Dedup check &mdash; never double-sends</td></tr>
+      <tr><td><code>sentry.kb.*</code></td><td>Echo-Ops</td><td>Known error patterns &amp; resolutions</td></tr>
+      <tr><td><code>session.*</code></td><td>All</td><td>Session state &amp; agent context</td></tr>
+    </table>
+    <p style="margin-top: 16px;">The Memory MCP server is an <strong>Elixir application</strong> with trigram search, tag filtering, and full JSON-RPC 2.0 MCP protocol support. Built in this very repo. <em>It's MCPs all the way down.</em></p>
+  </div>
 </section>
 
 <div class="divider"></div>
