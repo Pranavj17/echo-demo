@@ -10,6 +10,10 @@
 [![Built with Claude](https://img.shields.io/badge/Built_with-Claude_Sonnet_4-blueviolet?style=for-the-badge)](https://anthropic.com)
 [![Self Hosted](https://img.shields.io/badge/Self_Hosted-Mac_Mini_M4-black?style=for-the-badge&logo=apple)](https://www.apple.com/mac-mini/)
 
+[![Watch the Promo](https://drive.google.com/thumbnail?id=1luekhTV4Y0NmPsa-QF6ve6MZ00Fa9OrL&sz=w800)](https://drive.google.com/file/d/1luekhTV4Y0NmPsa-QF6ve6MZ00Fa9OrL/view?usp=drive_link)
+
+*Click to watch the 2-minute demo video*
+
 </div>
 
 ---
@@ -63,10 +67,18 @@ Echo-Ops monitors 7 production Sentry channels. When an error arrives, it:
 - **Check Data** — Runs Metabase queries to verify affected records
 - **Ignore** — Marks as triaged, saves decision to knowledge base
 
+**Slack Interactive Triage — Live Screen Recording:**
+
 <div align="center">
+<video src="https://github.com/Pranavj17/echo-demo/raw/main/assets/slack_demo.mp4" width="700" controls></video>
+</div>
 
-https://github.com/user-attachments/assets/slack_demo.mp4
+<div align="center">
+<img src="assets/slack_interactive.png" width="700" alt="Slack — Echo analyzing a Sentry alert with interactive buttons">
+</div>
 
+<div align="center">
+<img src="assets/slack_demo.png" width="700" alt="Slack — Echo thread with detailed error analysis">
 </div>
 
 ---
